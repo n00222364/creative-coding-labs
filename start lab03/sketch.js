@@ -1,0 +1,64 @@
+let data;
+let cleanedData = [];
+let charts = [];
+
+
+
+
+
+function preload() {
+    data = loadTable('data/Combined.csv', 'csv', 'header')
+
+
+}
+
+function setup() {
+    createCanvas(1000, 1000);
+    angleMode(DEGREES);
+    noLoop();
+    cleanData();
+    rectMode();
+    // Top left
+    charts.push(new BarChart(cleanedData,"Age_Group","Female", 300,300,10,15,2,50,350,450))
+    // Top right
+    //charts.push(new BarChart(cleanedData,"Age_Group","Total", 300,300,10,15,2,450,350,100))
+    // Bottom
+    //charts.push(new BarChart(cleanedData,"Age_Group","Male", 300,300,10,15,2,50,750,100))
+
+
+}
+
+function draw() {
+    
+    background(95, 0, 145);
+    charts.forEach(chart => {
+        chart.renderBars();
+        chart.renderAxis();
+        chart.renderLabels();
+        chart.renderTicks();
+    })
+}
+
+
+
+function cleanData() {
+    for (let index = 0; index < data.rows.length; index++) {
+        cleanedData.push(data.rows[index].obj)
+    }
+
+    for (let index = 0; index < cleanedData.length; index++) {
+        cleanedData[index].Female = parseInt(cleanedData[index].Female)
+        cleanedData[index].Male = parseInt(cleanedData[index].Male)
+        cleanedData[index].Total = parseInt(cleanedData[index].Total)
+    }
+
+}
+
+
+
+// pushing the objects made from the constructor to a new empty array, then we console.log the array to view the array of objects we made.
+// refers to Friend.js class
+// let friends = [];
+// friends.push(new Friend("Dave", 289));
+// friends.push(new Friend("Roger", 469));
+// console.log(friends)
