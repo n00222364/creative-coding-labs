@@ -18,8 +18,24 @@ function setup() {
     noLoop();
     cleanData();
     rectMode();
+    
     // Top left
-    charts.push(new BarChart(cleanedData,"Age_Group","Female", 300,300,10,15,2,50,350,450))
+    charts.push(new BarChart({
+        data:cleanedData,
+        xValue: "Age_Group",
+        yValue: "Female",
+        chartHeight: 200,
+        chartWidth: 200,
+        barWidth:10,
+        margin:15,
+        axisThickness:2,
+        axisTickThickness: 1,
+        xPos:50,
+        yPos:450
+    }));
+
+    
+    
     // Top right
     //charts.push(new BarChart(cleanedData,"Age_Group","Total", 300,300,10,15,2,450,350,100))
     // Bottom
@@ -30,7 +46,7 @@ function setup() {
 
 function draw() {
     
-    background(95, 0, 145);
+    background(100, 180, 145);
     charts.forEach(chart => {
         chart.renderBars();
         chart.renderAxis();
