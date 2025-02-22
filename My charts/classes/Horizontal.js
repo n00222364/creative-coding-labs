@@ -1,13 +1,13 @@
-class BarChart extends Chart{
+class Horizontal extends Chart{
     constructor(obj){
-         // calls constructor function in chart.js
+        // calls constructor function in chart.js
         super(obj)
     }
 
     renderBars(){
         // // chart
     push()
-        translate(this.chartPosX,this.chartPosY);
+        translate(this.chartPosX + this.margin,this.chartPosY - this.chartHeight);
         
         
 
@@ -15,14 +15,14 @@ class BarChart extends Chart{
 
     //     // chart bars
         push()
-            translate(this.margin,0)
             for(let i=0; i<this.data.length; i++){
-                let xPos = (this.barWidth + this.gap)*i;
+                let yPos = (this.barWidth + this.gap)*i;
                 
             
                 fill(this.barColour)
                 noStroke()
-                rect(xPos,0,this.barWidth,-this.data[i][this.yValue]*this.scaler)
+                // 
+                rect(0,yPos,this.data[i][this.yValue]*this.scaler,this.barWidth)
                 // bar text
                 fill (this.axisTextColour)
                 noStroke();
@@ -69,11 +69,10 @@ class BarChart extends Chart{
     renderLabels(){
         // // chart
     push()
-        translate(this.chartPosX,this.chartPosY);
+        translate(this.chartPosX + this.margin,this.chartPosY - this.chartHeight);
 
 
         push()
-            translate(this.margin,0)
             for(let i=0; i<this.data.length; i++){
                 let xPos = (this.barWidth + this.gap)*i;
                 
@@ -81,24 +80,24 @@ class BarChart extends Chart{
                 // bar text
                 fill (this.axisTextColour)
                 noStroke();
-                textAlign(LEFT, CENTER)
+                textAlign(RIGHT, CENTER)
                 textSize(10);
 
                // X axis text
                 push()
-                    translate(xPos + (this.barWidth/2),10)
-                    rotate(60)
+                    translate(-30,xPos + (this.barWidth/2))
+                    // rotate(60)
                     text (this.data[i][this.xValue],0,0);
                 pop()
 
 
 
                 // Y axis text
-                push()
-                    translate(xPos + (this.barWidth/2),80)
-                    // rotate(60)
-                    text (this.data[i][this.yValue],0,0);
-                pop()
+                // push()
+                //     translate(xPos + (this.barWidth/2),80)
+                //     // rotate(60)
+                //     text (this.data[i][this.yValue],0,0);
+                // pop()
                 // max%num=0;
             }
         pop()
@@ -108,6 +107,3 @@ class BarChart extends Chart{
     pop()
     }
 }
-
-
-
