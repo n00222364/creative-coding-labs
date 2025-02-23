@@ -1,4 +1,4 @@
-class BarChart extends Chart{
+class Stacked extends Chart{
     constructor(obj){
          // calls the parent constructor in chart.js
         //  inherits all chart.js properties.
@@ -110,6 +110,3 @@ class BarChart extends Chart{
     pop()
     }
 }
-
-
-

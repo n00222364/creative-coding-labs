@@ -9,6 +9,7 @@ let Radios;
 
 // horizontals
 let hRadio;
+let h2Radio;
 
 
 
@@ -21,7 +22,7 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(1000, 1000);
+    createCanvas(2000, 2000);
     angleMode(DEGREES);
     noLoop();
     cleanData();
@@ -29,6 +30,8 @@ function setup() {
     // calls all the radios we assign to each chart in createRadios function.
     createRadios();
    
+
+    // Charts
     // Top left
     charts.push(new BarChart({
         data:cleanedData,
@@ -47,8 +50,7 @@ function setup() {
         Radios: myRadio
     }));
 
-
-     // Top left
+    // right chart
      charts.push(new BarChart({
         data:cleanedData,
         xValue: "Age_Group",
@@ -66,6 +68,7 @@ function setup() {
         Radios: Radios
     }));
 
+    // Horizontal chart
     charts.push(new Horizontal({
         data:cleanedData,
         xValue: "Age_Group",
@@ -83,11 +86,39 @@ function setup() {
         Radios: hRadio
     }));
     
+    charts.push(new Horizontal({
+        data:cleanedData,
+        xValue: "Age_Group",
+        // gets value of the button we toggle 
+        yValue: myRadio.value(),
+        chartHeight: 300,
+        chartWidth: 300,
+        barWidth:10,
+        margin:15,
+        axisThickness:2,
+        axisTickThickness: 1,
+        chartPosX: 550,
+        chartPosY:900,
+        // where this.Radios is assigned
+        Radios: h2Radio
+    }));
     
-    // Top right
-    //charts.push(new BarChart(cleanedData,"Age_Group","Total", 300,300,10,15,2,450,350,100))
-    // Bottom
-    //charts.push(new BarChart(cleanedData,"Age_Group","Male", 300,300,10,15,2,50,750,100))
+    charts.push(new Stacked({
+        data:cleanedData,
+        xValue: "Age_Group",
+        // gets value of the button we toggle 
+        yValue: myRadio.value(),
+        chartHeight: 300,
+        chartWidth: 300,
+        barWidth:10,
+        margin:15,
+        axisThickness:2,
+        axisTickThickness: 1,
+        chartPosX:1000,
+        chartPosY:450,
+        // where this.Radios is assigned
+        Radios: myRadio
+    }));
 
 
 }
@@ -124,6 +155,7 @@ function cleanData() {
     
 }
 
+// the data toggle buttons on the screen
 function createRadios(){
     myRadio = createRadio();
     myRadio.position(150, 550);
@@ -144,8 +176,7 @@ function createRadios(){
     Radios = createRadio();
     Radios.position(600, 550);
     
-  
-    // Add a few color options.
+    // options
     Radios.option('Male');
     Radios.option('Female');
   
@@ -155,16 +186,27 @@ function createRadios(){
 
 
 
+    // Horozontal buttons
     hRadio = createRadio();
-    hRadio.position(350, 950);
+    hRadio.position(150, 950);
   
-    // Add a few color options.
+    // options
     hRadio.option('Male');
     hRadio.option('Female');
   
     // Choose a default option.
     hRadio.selected('Male');
 
+
+    h2Radio = createRadio();
+    h2Radio.position(650, 950);
+  
+    // options
+    h2Radio.option('Male');
+    h2Radio.option('Female');
+  
+    // Choose a default option.
+    h2Radio.selected('Male');
 
 
 
@@ -184,6 +226,9 @@ function createRadios(){
         redraw();
     });
 
+    h2Radio.changed(() => {
+        redraw();
+    });
 }
 
 

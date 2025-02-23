@@ -44,14 +44,21 @@ function draw(){
 
    push()
    translate(chartPosX,chartPosY)
+//    Moves the origin of the drawing to the specified position, allowing the chart to be drawn at a specific location on the canvas.
    noFill()
    stroke(axisColour);
    strokeWeight(axisThickness)
+//    draws axis
    line (0,0,0,-chartHeight)
    line (0,0,chartWidth,0)
    
+
    push()
+//    Another push() is used to save the current state before drawing the bars.
         translate(margin,0)
+        // translate(margin, 0): Moves the drawing origin to the right by the margin amount, providing space on the left side of the chart.
+
+        // The for loop iterates over each data point in cleanedData, calculating the x-position for each bar based on its index.
         for(let i=0; i<cleanedData.length; i++){
             let xPos = (barWidth + gap)*i;
             push()
@@ -64,7 +71,9 @@ function draw(){
                 noStroke();
                 // 
                 rect (0,0,barWidth, -cleanedData[i][yValues[j]]*scaler);
+                
                 translate(0,-cleanedData[i][yValues[j]]*scaler - 1)
+                //translate(0, -cleanedData[i][yValues[j]] * scaler - 1) Moves the drawing position down for the next bar, ensuring that bars are stacked vertically.
             }
             pop()
             pop()
