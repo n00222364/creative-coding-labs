@@ -1,4 +1,4 @@
-class BarChart extends Chart {
+class Scatter extends Chart {
     constructor(obj) {
         // calls the parent constructor in chart.js
         //  inherits all chart.js properties.
@@ -7,31 +7,24 @@ class BarChart extends Chart {
     }
 
     renderBars() {
-        // // chart
+        // // // chart
         push()
         translate(this.chartPosX, this.chartPosY);
+        
+      
 
 
-
-
-
-        //     // chart bars
+        // //     // chart bars
         push()
         translate(this.margin, 0)
+  
         for (let i = 0; i < this.data.length; i++) {
             let xPos = (this.barWidth + this.gap) * i;
 
 
             fill(this.barColour)
-            noStroke()
-            rect(xPos, 0, this.barWidth, -this.data[i][this.yValue] * this.scaler)
-            // bar text
-            fill(this.axisTextColour)
-            noStroke();
-            textAlign(LEFT, CENTER)
-            textSize(10);
-
-
+        //     noStroke()
+            ellipse(xPos, -this.data[i][this.yValue] * this.scaler, this.barWidth, this.barWidth)
         }
         pop()
         // chartBars end
@@ -59,18 +52,10 @@ class BarChart extends Chart {
         noFill()
         stroke(this.axisTickColour)
         strokeWeight(this.axisTickThickness)
-        
-        let maxValues = this.data.map((d) => d[this.yValue]);
-        let maxValue = max(maxValues);
-
 
         let tickIncrement = this.chartHeight / this.numTicks;
         for (let i = 0; i <= this.numTicks; i++) {
             line(0, tickIncrement * -i, -this.tickLength, tickIncrement * -i,)
-            
-            text(Math.ceil(maxValue / (i+1)),-40, tickIncrement * i - this.chartHeight)
-
-    
         }
 
         pop()
@@ -105,12 +90,12 @@ class BarChart extends Chart {
 
 
             // Y axis text
-            // push()
-            // translate(xPos + (this.barWidth / 2), 80)
-            // // rotate(60)
-            // text(this.data[i][this.yValue], 0, 0);
-            // pop()
-            // // max%num=0;
+            push()
+            translate(xPos + (this.barWidth / 2), 80)
+            // rotate(60)
+            text(this.data[i][this.yValue], 0, 0);
+            pop()
+            // max%num=0;
         }
         pop()
         // chartBars end
@@ -119,6 +104,3 @@ class BarChart extends Chart {
         pop()
     }
 }
-
-
-

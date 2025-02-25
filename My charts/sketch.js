@@ -13,7 +13,7 @@ let h2Radio;
 
 let font;
 
-
+let barColours = []
 
 
 function preload() {
@@ -32,6 +32,8 @@ function setup() {
     createRadios();
     textFont(font);
    
+    barColours.push(color(125,34,56))
+    barColours.push(color(225,34,56))
 
     // Charts
     // Left barchart
@@ -109,7 +111,7 @@ function setup() {
         data:cleanedData,
         xValue: "scores",
         // gets value of the button we toggle 
-        yValue: myRadio.value(),
+        yValues: ["male_math_scores","female_math_scores"],
         chartHeight: 300,
         chartWidth: 300,
         barWidth:10,
@@ -117,12 +119,27 @@ function setup() {
         axisThickness:2,
         axisTickThickness: 1,
         chartPosX:1000,
-        chartPosY:450,
+        chartPosY:850,
         // where this.Radios is assigned
-        Radios: myRadio
+        Radios: null
     }));
 
-
+    charts.push(new Scatter({
+        data:cleanedData,
+        xValue: "scores",
+        // gets value of the button we toggle 
+        yValue: myRadio.value(),
+        chartHeight: 400,
+        chartWidth: 300,
+        barWidth:15,
+        margin:15,
+        axisThickness:2,
+        axisTickThickness: 1,
+        chartPosX:1000,
+        chartPosY:1500,
+        // where this.Radios is assigned
+        Radios: null
+    }));
 }
 
 function draw() {
@@ -130,8 +147,9 @@ function draw() {
     background(192,197,206);
     charts.forEach(chart => {
         // sets the value of YValue in the chart from the radio group we assigned to each chart. instead of both charts changing yValues at once.
+        if (chart.Radios != null){
         chart.setY(chart.Radios.value());
-
+        }
 
         chart.renderBars();
         chart.renderAxis();

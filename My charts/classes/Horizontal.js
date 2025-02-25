@@ -52,17 +52,38 @@ class Horizontal extends Chart{
 
     renderTicks(){
         // // chart
+    // push()
+    //     translate(this.chartPosX,this.chartPosY);
+    //     noFill()
+    //     stroke(this.axisTickColour)
+    //     strokeWeight(this.axisTickThickness)
+        
+    //         let tickIncrement = this.chartHeight/this.numTicks;
+    //         for(let i=0; i<=this.numTicks; i++){
+    //             line(0,tickIncrement*-i,-this.tickLength,tickIncrement*-i,)
+    //         }
+        
+    // pop()
+
     push()
-        translate(this.chartPosX,this.chartPosY);
-        noFill()
-        stroke(this.axisTickColour)
-        strokeWeight(this.axisTickThickness)
+    translate(this.chartPosX, this.chartPosY);
+    noFill()
+    stroke(this.axisTickColour)
+    strokeWeight(this.axisTickThickness)
+    
+    let maxValues = this.data.map((d) => d[this.yValue]);
+    let maxValue = max(maxValues);
+
+
+    let tickIncrement = this.chartHeight / this.numTicks;
+    for (let i = 0; i <= this.numTicks; i++) {
+        line(0, tickIncrement * -i, -this.tickLength, tickIncrement * -i,)
         
-            let tickIncrement = this.chartHeight/this.numTicks;
-            for(let i=0; i<=this.numTicks; i++){
-                line(0,tickIncrement*-i,-this.tickLength,tickIncrement*-i,)
-            }
-        
+        // text(Math.ceil(maxValue / (i+1)), tickIncrement * i - this.chartHeight,40)
+
+
+    }
+
     pop()
     }
 
