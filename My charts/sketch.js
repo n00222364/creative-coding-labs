@@ -11,13 +11,14 @@ let Radios;
 let hRadio;
 let h2Radio;
 
+let font;
 
 
 
 
 function preload() {
-    data = loadTable('data/Combined.csv', 'csv', 'header')
-
+    data = loadTable('data/studentScores.csv', 'csv', 'header')
+    font = loadFont ('./font/Roboto/roboto.ttf');
 
 }
 
@@ -29,18 +30,19 @@ function setup() {
     rectMode();
     // calls all the radios we assign to each chart in createRadios function.
     createRadios();
+    textFont(font);
    
 
     // Charts
-    // Top left
+    // Left barchart
     charts.push(new BarChart({
         data:cleanedData,
-        xValue: "Age_Group",
+        xValue: "scores",
         // gets value of the button we toggle 
         yValue: myRadio.value(),
-        chartHeight: 300,
+        chartHeight: 400,
         chartWidth: 300,
-        barWidth:10,
+        barWidth:15,
         margin:15,
         axisThickness:2,
         axisTickThickness: 1,
@@ -50,15 +52,15 @@ function setup() {
         Radios: myRadio
     }));
 
-    // right chart
+    // right barchart
      charts.push(new BarChart({
         data:cleanedData,
-        xValue: "Age_Group",
+        xValue: "scores",
         // gets value of the button we toggle 
         yValue: myRadio.value(),
-        chartHeight: 300,
+        chartHeight: 400,
         chartWidth: 300,
-        barWidth:10,
+        barWidth:15,
         margin:15,
         axisThickness:2,
         axisTickThickness: 1,
@@ -71,12 +73,12 @@ function setup() {
     // Horizontal chart
     charts.push(new Horizontal({
         data:cleanedData,
-        xValue: "Age_Group",
+        xValue: "scores",
         // gets value of the button we toggle 
         yValue: myRadio.value(),
         chartHeight: 300,
         chartWidth: 300,
-        barWidth:10,
+        barWidth:15,
         margin:15,
         axisThickness:2,
         axisTickThickness: 1,
@@ -88,12 +90,12 @@ function setup() {
     
     charts.push(new Horizontal({
         data:cleanedData,
-        xValue: "Age_Group",
+        xValue: "scores",
         // gets value of the button we toggle 
         yValue: myRadio.value(),
         chartHeight: 300,
         chartWidth: 300,
-        barWidth:10,
+        barWidth:15,
         margin:15,
         axisThickness:2,
         axisTickThickness: 1,
@@ -105,7 +107,7 @@ function setup() {
     
     charts.push(new Stacked({
         data:cleanedData,
-        xValue: "Age_Group",
+        xValue: "scores",
         // gets value of the button we toggle 
         yValue: myRadio.value(),
         chartHeight: 300,
@@ -125,7 +127,7 @@ function setup() {
 
 function draw() {
     
-    background(100, 180, 145);
+    background(192,197,206);
     charts.forEach(chart => {
         // sets the value of YValue in the chart from the radio group we assigned to each chart. instead of both charts changing yValues at once.
         chart.setY(chart.Radios.value());
@@ -146,9 +148,8 @@ function cleanData() {
     }
 
     for (let index = 0; index < cleanedData.length; index++) {
-        cleanedData[index].Female = parseInt(cleanedData[index].Female)
-        cleanedData[index].Male = parseInt(cleanedData[index].Male)
-        cleanedData[index].Total = parseInt(cleanedData[index].Total)
+        cleanedData[index].female_math_scores = parseInt(cleanedData[index].female_math_scores)
+        cleanedData[index].male_math_scores = parseInt(cleanedData[index].male_math_scores)
     }
 
 
@@ -158,14 +159,14 @@ function cleanData() {
 // the data toggle buttons on the screen
 function createRadios(){
     myRadio = createRadio();
-    myRadio.position(150, 550);
+    myRadio.position(50, 550);
   
     // Add a few color options.
-    myRadio.option('Male');
-    myRadio.option('Female');
+    myRadio.option('male_math_scores');
+    myRadio.option('female_math_scores');
   
     // Choose a default option.
-    myRadio.selected('Male');
+    myRadio.selected('male_math_scores');
 
 
     // redraws the charts when the radio button value changes.
@@ -174,39 +175,39 @@ function createRadios(){
     });
 
     Radios = createRadio();
-    Radios.position(600, 550);
+    Radios.position(500, 550);
     
     // options
-    Radios.option('Male');
-    Radios.option('Female');
+    Radios.option('male_reading_scores');
+    Radios.option('female_reading_scores');
   
     // Choose a default option.
-    Radios.selected('Male');
+    Radios.selected('male_reading_scores');
 
 
 
 
     // Horozontal buttons
     hRadio = createRadio();
-    hRadio.position(150, 950);
+    hRadio.position(100, 950);
   
     // options
-    hRadio.option('Male');
-    hRadio.option('Female');
+    hRadio.option('male_writing_scores');
+    hRadio.option('female_writing_scores');
   
     // Choose a default option.
-    hRadio.selected('Male');
+    hRadio.selected('male_writing_scores');
 
 
     h2Radio = createRadio();
-    h2Radio.position(650, 950);
+    h2Radio.position(550, 950);
   
     // options
-    h2Radio.option('Male');
-    h2Radio.option('Female');
+    h2Radio.option('male_writing_scores');
+    h2Radio.option('female_writing_scores');
   
     // Choose a default option.
-    h2Radio.selected('Male');
+    h2Radio.selected('male_writing_scores');
 
 
 
