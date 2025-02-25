@@ -11,6 +11,8 @@ let Radios;
 let hRadio;
 let h2Radio;
 
+// scatter
+let sRadio;
 let font;
 
 let barColours = []
@@ -81,7 +83,7 @@ function setup() {
         chartHeight: 300,
         chartWidth: 300,
         barWidth:15,
-        margin:15,
+        margin:0,
         axisThickness:2,
         axisTickThickness: 1,
         chartPosX: 100,
@@ -114,7 +116,7 @@ function setup() {
         yValues: ["male_math_scores","female_math_scores"],
         chartHeight: 300,
         chartWidth: 300,
-        barWidth:10,
+        barWidth:15,
         margin:15,
         axisThickness:2,
         axisTickThickness: 1,
@@ -138,7 +140,7 @@ function setup() {
         chartPosX:1000,
         chartPosY:1500,
         // where this.Radios is assigned
-        Radios: null
+        Radios: sRadio
     }));
 }
 
@@ -147,6 +149,7 @@ function draw() {
     background(192,197,206);
     charts.forEach(chart => {
         // sets the value of YValue in the chart from the radio group we assigned to each chart. instead of both charts changing yValues at once.
+        // if the radio is set to null the radio yValue isnt used
         if (chart.Radios != null){
         chart.setY(chart.Radios.value());
         }
@@ -178,8 +181,8 @@ function cleanData() {
 function createRadios(){
     myRadio = createRadio();
     myRadio.position(50, 550);
-  
-    // Add a few color options.
+
+    // options
     myRadio.option('male_math_scores');
     myRadio.option('female_math_scores');
   
@@ -227,7 +230,21 @@ function createRadios(){
     // Choose a default option.
     h2Radio.selected('male_writing_scores');
 
+    sRadio = createRadio();
+    sRadio.position(1000, 1600);
+  
+    // options
+    sRadio.option('male_math_scores');
+    sRadio.option('male_reading_scores');
+  
+    // Choose a default option.
+    sRadio.selected('male_math_scores');
 
+
+    // redraws the charts when the radio button value changes.
+    sRadio.changed(() => {
+        redraw();
+    });
 
 
     // redraws the charts when the radio button value changes.
@@ -249,11 +266,3 @@ function createRadios(){
         redraw();
     });
 }
-
-
-// pushing the objects made from the constructor to a new empty array, then we console.log the array to view the array of objects we made.
-// refers to Friend.js class
-// let friends = [];
-// friends.push(new Friend("Dave", 289));
-// friends.push(new Friend("Roger", 469));
-// console.log(friends)

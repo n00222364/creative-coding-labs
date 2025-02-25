@@ -68,6 +68,9 @@ class BarChart extends Chart {
         for (let i = 0; i <= this.numTicks; i++) {
             line(0, tickIncrement * -i, -this.tickLength, tickIncrement * -i,)
             
+            textFont('Roboto');
+            fill(0)
+            noStroke()
             text(Math.ceil(maxValue / (i+1)),-40, tickIncrement * i - this.chartHeight)
 
     

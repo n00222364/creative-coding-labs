@@ -51,20 +51,6 @@ class Horizontal extends Chart{
     }
 
     renderTicks(){
-        // // chart
-    // push()
-    //     translate(this.chartPosX,this.chartPosY);
-    //     noFill()
-    //     stroke(this.axisTickColour)
-    //     strokeWeight(this.axisTickThickness)
-        
-    //         let tickIncrement = this.chartHeight/this.numTicks;
-    //         for(let i=0; i<=this.numTicks; i++){
-    //             line(0,tickIncrement*-i,-this.tickLength,tickIncrement*-i,)
-    //         }
-        
-    // pop()
-
     push()
     translate(this.chartPosX, this.chartPosY);
     noFill()
@@ -79,7 +65,13 @@ class Horizontal extends Chart{
     for (let i = 0; i <= this.numTicks; i++) {
         line(0, tickIncrement * -i, -this.tickLength, tickIncrement * -i,)
         
-        // text(Math.ceil(maxValue / (i+1)), tickIncrement * i - this.chartHeight,40)
+        textFont('Roboto');
+            fill(0)
+            noStroke()
+            // we calculate the tick values by taking the max value divided by the length of the indexes and we add 1 to stop it from displaying "infinity"
+        // as i increases the value moves down the y-axis
+        // we do -this.chartHeight * this.scaler to adjust the chart height to match to fit the ticks
+        text(Math.ceil(maxValue / (i+1)), -tickIncrement * i + this.chartHeight,20)
 
 
     }

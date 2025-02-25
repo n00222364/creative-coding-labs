@@ -46,16 +46,30 @@ class Scatter extends Chart {
     }
 
     renderTicks() {
-        // // chart
         push()
         translate(this.chartPosX, this.chartPosY);
         noFill()
         stroke(this.axisTickColour)
         strokeWeight(this.axisTickThickness)
+        
+        let maxValues = this.data.map((d) => d[this.yValue]);
+        let maxValue = max(maxValues);
+
 
         let tickIncrement = this.chartHeight / this.numTicks;
         for (let i = 0; i <= this.numTicks; i++) {
             line(0, tickIncrement * -i, -this.tickLength, tickIncrement * -i,)
+            
+
+            textFont('Roboto');
+            fill(0)
+            noStroke()
+            // we calculate the tick values by taking the max value divided by the length of the indexes and we add 1 to stop it from displaying "infinity"
+        // as i increases the value moves down the y-axis
+        // we do -this.chartHeight * this.scaler to adjust the chart height to match to fit the ticks
+            text(Math.ceil(maxValue / (i+1)),-40, tickIncrement * i - this.chartHeight)
+
+    
         }
 
         pop()
@@ -89,13 +103,7 @@ class Scatter extends Chart {
 
 
 
-            // Y axis text
-            push()
-            translate(xPos + (this.barWidth / 2), 80)
-            // rotate(60)
-            text(this.data[i][this.yValue], 0, 0);
-            pop()
-            // max%num=0;
+            
         }
         pop()
         // chartBars end
