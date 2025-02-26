@@ -41,18 +41,21 @@ class Stacked extends Chart {
       
       // The inner loop iterates over the yValues, filling each segment of the bar with a color and drawing a rectangle (rect) for each data series.
       for (let j = 0; j < this.yValues.length; j++) {
+        let totalSum = 0;
+        // console.log(totalSum)
+
+        // Calculate the total sum of all values in the current row
+        for (let t = 0; t < this.yValues.length; t++) {
+        totalSum += cleanedData[i][this.yValues[t]];  
+    }
+
+    let totalY = cleanedData[i][this.yValues[j]] / totalSum;
         fill(barColours[j]);
         noStroke();
-        // The height of each rectangle is scaled by this.scaler to fit within the chart height.
 
-        // we get the xPos and draw the bar at the origin, after we set the width of the bar we then calc the y using - to make sure it goes upward
-
-        // we get the initial bar with cleanedData[i], then we loop through the yValues to place the next bar directly on top of the previous bar
-        rect(xPos, 0, this.barWidth, -cleanedData[i][this.yValues[j]] * this.scaler);
+        rect(xPos, 0, this.barWidth, -totalY * this.chartHeight);
        
-
-        // we translate the draw the next bar on top of the previous bar, we leave a -1 pixel gap to seperate the bars 
-        translate(0, -cleanedData[i][this.yValues[j]] * this.scaler - 1);
+        translate(0, -totalY * this.chartHeight - 1);
 
         
       }
@@ -71,25 +74,13 @@ class Stacked extends Chart {
     noFill();
     stroke(this.axisColour);
     strokeWeight(this.axisThickness);
-    line(0, 0, 0, -this.chartHeight * this.scaler);
+    line(0, 0, 0, -this.chartHeight);
     line(0, 0, this.chartWidth, 0);
     pop();
   }
  
   renderTicks() {
-    // // // chart
-    // push();
-    // translate(this.chartPosX, this.chartPosY);
-    // noFill();
-    // stroke(this.axisTickColour);
-    // strokeWeight(this.axisTickThickness);
- 
-    // let tickIncrement = this.chartHeight *this.scaler / this.numTicks;
-    // for (let i = 0; i <= this.numTicks; i++) {
-    //   line(0, tickIncrement * -i, -this.tickLength, tickIncrement * -i);
-    // }
- 
-    // pop();
+
 
     push()
     translate(this.chartPosX, this.chartPosY);
@@ -99,17 +90,19 @@ class Stacked extends Chart {
     
 
 
-    let tickIncrement = this.chartHeight / this.numTicks * this.scaler;
+    let tickIncrement = this.chartHeight / this.numTicks;
     for (let i = 0; i <= this.numTicks; i++) {
         line(0, tickIncrement * -i, -this.tickLength, tickIncrement * -i,)
         
         textFont('Roboto');
         fill(0)
         noStroke()
-        // we calculate the tick values by taking the max value divided by the length of the indexes and we add 1 to stop it from displaying "infinity"
-        // as i increases the value moves down the y-axis
-        // we do -this.chartHeight * this.scaler to adjust the chart height to match to fit the ticks
-        text(Math.ceil(this.maxValue / (i+1)),-40, tickIncrement * i - this.chartHeight * this.scaler)
+        
+        // we iterate  each tick and do -i to make sure the value is less each time, this.numTicks - 0 will be equal to 100, and so on.
+        // diving by the ammount of ticks ensures the % stays between 0-100
+        // multiplying by 100 is what gives us the percentage.
+        let percentage = (this.numTicks - i) / this.numTicks * 100;
+        text(Math.ceil(percentage) + "%", -40, tickIncrement * i - this.chartHeight);
 
 
     }
